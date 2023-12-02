@@ -18,6 +18,10 @@ final class RMService {
     /// Send RickAndMorty API Call.
     /// - Parameters:
     ///   - request: Request instance.
+    ///   - type: Type of object we expect get back.
     ///   - completion: Call back with data or error.
-    public func execute(_ request: RMRequest, completion: @escaping () -> Void) {}
+    public func execute<T: Codable>(
+        _ request: RMRequest,
+        expecting type: T.Type,
+        completion: @escaping (Result<String, Error>) -> Void) {}
 }
