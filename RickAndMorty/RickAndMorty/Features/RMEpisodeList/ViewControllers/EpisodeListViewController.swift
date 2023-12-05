@@ -8,7 +8,7 @@
 import UIKit
 
 /// Controller to show and search for episodes.
-final class RMEpisodeViewController: UIViewController {
+final class EpisodeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
