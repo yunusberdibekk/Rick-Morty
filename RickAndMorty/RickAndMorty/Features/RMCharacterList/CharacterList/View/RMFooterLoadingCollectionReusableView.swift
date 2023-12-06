@@ -8,7 +8,11 @@
 import UIKit
 
 final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
+    // MARK: - Properties
+
     static let identifier = "RMFooterLoadingCollectionReusableView"
+
+    // MARK: - Components
 
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -16,6 +20,8 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         return spinner
     }()
+
+    // MARK: - Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,6 +35,8 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
         fatalError("Unsupported")
     }
 
+    // MARK: - Functions
+
     public func startAnimating() {
         spinner.startAnimating()
     }
@@ -36,13 +44,17 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
     public func stopAnimating() {
         spinner.stopAnimating()
     }
+}
 
+// MARK: - Constraints extension
+
+extension RMFooterLoadingCollectionReusableView {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             spinner.widthAnchor.constraint(equalToConstant: 100),
             spinner.heightAnchor.constraint(equalToConstant: 100),
             spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 }

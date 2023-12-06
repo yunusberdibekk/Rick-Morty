@@ -39,7 +39,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    // MARK: - Init
+    // MARK: - Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,6 +63,8 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         statusLabel.text = nil
     }
 
+    // MARK: - Functions
+
     public func configure(with viewModel: RMCharacterCollectionViewCellViewModel) {
         nameLabel.text = viewModel.characterName
         statusLabel.text = viewModel.characterStatusText
@@ -79,7 +81,11 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+}
 
+// MARK: - Constraints extension
+
+extension RMCharacterCollectionViewCell {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             statusLabel.heightAnchor.constraint(equalToConstant: 30),
@@ -96,7 +102,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -3),
+            imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -3)
         ])
     }
 

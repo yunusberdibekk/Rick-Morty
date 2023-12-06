@@ -8,7 +8,11 @@
 import Foundation
 
 final class RMCharacterDetailViewModel {
+    // MARK: - Properties
+
     private let character: RMCharacter
+
+    // MARK: - Lifecycle
 
     init(character: RMCharacter) {
         self.character = character

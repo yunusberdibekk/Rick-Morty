@@ -10,10 +10,14 @@ import UIKit
 
 /// Controller to house tabs and route tab controllers.
 final class RMTabViewController: UITabBarController {
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTabs()
     }
+
+    // MARK: - Functions
 
     private func setUpTabs() {
         let charactersNavController = UINavigationController(
@@ -41,12 +45,10 @@ final class RMTabViewController: UITabBarController {
             title: "Settings",
             image: UIImage(systemName: "gear"),
             tag: 4)
-
         for navController in [charactersNavController, locationsNavController, episodesNavController, settingsNavController] {
             navController.navigationItem.largeTitleDisplayMode = .automatic
             navController.navigationBar.prefersLargeTitles = true
         }
-
         setViewControllers([charactersNavController, locationsNavController, episodesNavController, settingsNavController], animated: true)
     }
 }

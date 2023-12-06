@@ -7,16 +7,21 @@
 
 import UIKit
 
+// MARK: - Protocols
+
 protocol RMCharacterListViewDelegate: AnyObject {
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter)
 }
 
 /// View that handles showing list of characters, loader, etc.
 class RMCharacterListView: UIView {
+    // MARK: - Properties
+
     private let viewModel: RMCharacterListViewModel = .init()
     public weak var delegate: RMCharacterListViewDelegate?
 
-    /// Components
+    // MARK: - Components
+
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
@@ -40,7 +45,8 @@ class RMCharacterListView: UIView {
         return collectionView
     }()
 
-    /// Init
+    // MARK: - Lifecycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
@@ -57,8 +63,11 @@ class RMCharacterListView: UIView {
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
     }
+}
 
-    /// Functions
+// MARK: - Constraints extension
+
+extension RMCharacterListView {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             spinner.widthAnchor.constraint(equalToConstant: 100),
@@ -69,7 +78,7 @@ class RMCharacterListView: UIView {
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -78,6 +87,8 @@ class RMCharacterListView: UIView {
         collectionView.delegate = viewModel
     }
 }
+
+// MARK: - RMCharacterListViewModelDelegate extension
 
 extension RMCharacterListView: RMCharacterListViewModelDelegate {
     func didLoadInitialCharacters() {

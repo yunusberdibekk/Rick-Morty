@@ -9,7 +9,13 @@ import UIKit
 
 /// Controller to show info about single character.
 class RMCharacterDetailViewController: UIViewController {
+    // MARK: - Properties
+
     private let viewModel: RMCharacterDetailViewModel
+
+    // MARK: - Components
+
+    // MARK: - Lifecycle
 
     init(viewModel: RMCharacterDetailViewModel) {
         self.viewModel = viewModel

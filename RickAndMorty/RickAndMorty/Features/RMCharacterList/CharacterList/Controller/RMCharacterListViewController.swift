@@ -9,7 +9,11 @@ import UIKit
 
 /// Controller to show and search for characters.
 final class RMCharacterListViewController: UIViewController {
+    // MARK: - Properties
+
     private let characterListView: RMCharacterListView = .init()
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +21,11 @@ final class RMCharacterListViewController: UIViewController {
         title = "Characters"
         setUpView()
     }
+}
 
+// MARK: - Constraints extension
+
+extension RMCharacterListViewController {
     private func setUpView() {
         characterListView.delegate = self
         view.addSubview(characterListView)
@@ -25,10 +33,12 @@ final class RMCharacterListViewController: UIViewController {
             characterListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
+
+// MARK: - RMCharacterListViewDelegate extension
 
 extension RMCharacterListViewController: RMCharacterListViewDelegate {
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {

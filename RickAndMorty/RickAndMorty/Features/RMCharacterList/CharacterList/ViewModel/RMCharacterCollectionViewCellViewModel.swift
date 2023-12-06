@@ -8,9 +8,13 @@
 import Foundation
 
 final class RMCharacterCollectionViewCellViewModel: Hashable, Equatable {
+    // MARK: - Properties
+
     public let characterName: String
     private let characterStatus: RMCharacterStatus
     private let characterImageURL: URL?
+
+    // MARK: - Lifecycle
 
     init(characterName: String, characterStatus: RMCharacterStatus, characterImageURL: URL?) {
         self.characterName = characterName
@@ -22,8 +26,9 @@ final class RMCharacterCollectionViewCellViewModel: Hashable, Equatable {
         "Status: \(characterStatus.text)"
     }
 
+    // MARK: - Functions
+
     public func fetchImage(completion: @escaping (Result<Data, Error>) -> Void) {
-        // TODO: -Abstract to Image Manager
         guard let url = characterImageURL else {
             completion(.failure(URLError(.badURL)))
             return
