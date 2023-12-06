@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 /// Controller to house tabs and route tab controllers.
-final class RootTabViewController: UITabBarController {
+final class RMTabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTabs()
@@ -17,17 +17,17 @@ final class RootTabViewController: UITabBarController {
 
     private func setUpTabs() {
         let charactersNavController = UINavigationController(
-            rootViewController: CharacterListViewController())
+            rootViewController: RMCharacterListViewController())
         let locationsNavController = UINavigationController(
-            rootViewController: LocationListViewController())
+            rootViewController: RMLocationListViewController())
         let episodesNavController = UINavigationController(
-            rootViewController: EpisodeListViewController())
+            rootViewController: RMEpisodeListViewController())
         let settingsNavController = UINavigationController(
-            rootViewController: SettingsViewController())
+            rootViewController: RMSettingsViewController())
 
         charactersNavController.tabBarItem = UITabBarItem(
             title: "Characters",
-            image: UIImage(systemName: "person"),
+            image: UIImage(systemName: "person.fill"),
             tag: 1)
         locationsNavController.tabBarItem = UITabBarItem(
             title: "Locations",
@@ -52,5 +52,5 @@ final class RootTabViewController: UITabBarController {
 }
 
 #Preview {
-    RootTabViewController()
+    RMTabViewController()
 }
