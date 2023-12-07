@@ -10,15 +10,18 @@ import UIKit
 
 /// Controller to house tabs and route tab controllers.
 final class RMTabViewController: UITabBarController {
-    // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTabs()
     }
+}
 
-    // MARK: - Functions
+#Preview {
+    RMTabViewController()
+}
 
+/// RMTabViewController extension.
+extension RMTabViewController {
     private func setUpTabs() {
         let charactersNavController = UINavigationController(
             rootViewController: RMCharacterListViewController())
@@ -51,8 +54,4 @@ final class RMTabViewController: UITabBarController {
         }
         setViewControllers([charactersNavController, locationsNavController, episodesNavController, settingsNavController], animated: true)
     }
-}
-
-#Preview {
-    RMTabViewController()
 }

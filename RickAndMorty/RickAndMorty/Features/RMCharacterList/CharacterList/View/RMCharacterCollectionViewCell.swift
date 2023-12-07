@@ -9,12 +9,10 @@ import UIKit
 
 /// Single cell for a character.
 final class RMCharacterCollectionViewCell: UICollectionViewCell {
-    // MARK: - Properties
-
+    /// Properties
     static let cellIdentifier: String = "RMCharacterCollectionViewCell"
 
-    // MARK: - Components
-
+    /// Components
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -39,8 +37,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    // MARK: - Lifecycle
-
+    /// Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .secondarySystemBackground
@@ -63,8 +60,6 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         statusLabel.text = nil
     }
 
-    // MARK: - Functions
-
     public func configure(with viewModel: RMCharacterCollectionViewCellViewModel) {
         nameLabel.text = viewModel.characterName
         statusLabel.text = viewModel.characterStatusText
@@ -83,8 +78,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: - Constraints extension
-
+/// RMCharacterCollectionViewCell extension.
 extension RMCharacterCollectionViewCell {
     private func addConstraints() {
         NSLayoutConstraint.activate([

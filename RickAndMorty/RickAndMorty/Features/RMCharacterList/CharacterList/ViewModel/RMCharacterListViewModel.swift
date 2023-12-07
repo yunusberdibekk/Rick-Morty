@@ -17,8 +17,7 @@ protocol RMCharacterListViewModelDelegate: AnyObject {
 
 /// View model to handle character list view logic
 final class RMCharacterListViewModel: NSObject {
-    // MARK: - Properties
-
+    /// Properties
     public weak var delegate: RMCharacterListViewModelDelegate?
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = .init()
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
@@ -41,8 +40,6 @@ final class RMCharacterListViewModel: NSObject {
     public var shouldShowLoadMoreIndicator: Bool {
         return apiInfo?.next != nil
     }
-
-    // MARK: - Functions
 
     /// Fetch initial set of characters(20)
     public func fetchCharacters() {
@@ -98,8 +95,7 @@ final class RMCharacterListViewModel: NSObject {
     }
 }
 
-// MARK: - CollectionView extension
-
+/// RMCharacterListViewModel + CollectionView extension.
 extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cellViewModels.count
@@ -112,7 +108,6 @@ extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionView
         else {
             fatalError("Unsupported")
         }
-
         cell.configure(with: cellViewModels[indexPath.row])
         return cell
     }
@@ -133,7 +128,6 @@ extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionView
         guard kind == UICollectionView.elementKindSectionFooter else {
             fatalError("Unsupported")
         }
-
         guard let footer = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier,
@@ -141,7 +135,6 @@ extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionView
         else {
             fatalError("Unsupported")
         }
-
         footer.startAnimating()
         return footer
     }
@@ -152,8 +145,7 @@ extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionView
     }
 }
 
-// MARK: - ScroolView extension
-
+/// RMCharacterListViewModel + ScroolView extension.
 extension RMCharacterListViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator,
@@ -164,7 +156,6 @@ extension RMCharacterListViewModel: UIScrollViewDelegate {
         else {
             return
         }
-
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
             let offset = scrollView.contentOffset.y
             let totalContentHeight = scrollView.contentSize.height

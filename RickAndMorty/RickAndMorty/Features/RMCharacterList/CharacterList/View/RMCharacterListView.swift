@@ -15,13 +15,11 @@ protocol RMCharacterListViewDelegate: AnyObject {
 
 /// View that handles showing list of characters, loader, etc.
 class RMCharacterListView: UIView {
-    // MARK: - Properties
-
+    /// Properties
     private let viewModel: RMCharacterListViewModel = .init()
     public weak var delegate: RMCharacterListViewDelegate?
 
-    // MARK: - Components
-
+    /// Components
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
@@ -45,13 +43,11 @@ class RMCharacterListView: UIView {
         return collectionView
     }()
 
-    // MARK: - Lifecycle
-
+    /// Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         addSubviews(collectionView, spinner)
-
         addConstraints()
         spinner.startAnimating()
         viewModel.delegate = self
@@ -65,8 +61,7 @@ class RMCharacterListView: UIView {
     }
 }
 
-// MARK: - Constraints extension
-
+/// RMCharacterListView extension.
 extension RMCharacterListView {
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -88,8 +83,7 @@ extension RMCharacterListView {
     }
 }
 
-// MARK: - RMCharacterListViewModelDelegate extension
-
+/// RMCharacterListView + RMCharacterListViewModelDelegate extension.
 extension RMCharacterListView: RMCharacterListViewModelDelegate {
     func didLoadInitialCharacters() {
         spinner.stopAnimating()

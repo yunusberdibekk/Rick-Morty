@@ -8,12 +8,10 @@
 import UIKit
 
 final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
-    // MARK: - Properties
-
+    /// Properties
     static let identifier = "RMFooterLoadingCollectionReusableView"
 
-    // MARK: - Components
-
+    /// Components
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
@@ -21,8 +19,7 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
         return spinner
     }()
 
-    // MARK: - Lifecycle
-
+    /// Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
@@ -35,8 +32,6 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
         fatalError("Unsupported")
     }
 
-    // MARK: - Functions
-
     public func startAnimating() {
         spinner.startAnimating()
     }
@@ -46,8 +41,7 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
     }
 }
 
-// MARK: - Constraints extension
-
+/// RMFooterLoadingCollectionReusableView extension.
 extension RMFooterLoadingCollectionReusableView {
     private func addConstraints() {
         NSLayoutConstraint.activate([

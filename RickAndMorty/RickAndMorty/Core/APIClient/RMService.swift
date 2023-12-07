@@ -12,7 +12,7 @@ final class RMService {
     /// Singleton instance.
     static let shared: RMService = .init()
 
-    /// Privatized constructor.
+    /// Privatized init.
     private init() {}
 
     enum RMServiceError: Error {
@@ -50,9 +50,9 @@ final class RMService {
         }
         task.resume()
     }
+}
 
-    // MARK: - Private
-
+extension RMService {
     private func request(from rmRequest: RMRequest) -> URLRequest? {
         guard let url = rmRequest.url else {
             return nil

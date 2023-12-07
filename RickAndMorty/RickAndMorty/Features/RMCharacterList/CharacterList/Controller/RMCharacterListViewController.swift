@@ -9,12 +9,10 @@ import UIKit
 
 /// Controller to show and search for characters.
 final class RMCharacterListViewController: UIViewController {
-    // MARK: - Properties
-
+    /// Properties
     private let characterListView: RMCharacterListView = .init()
 
-    // MARK: - Lifecycle
-
+    /// Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -23,8 +21,11 @@ final class RMCharacterListViewController: UIViewController {
     }
 }
 
-// MARK: - Constraints extension
+#Preview {
+    RMCharacterListViewController()
+}
 
+/// RMCharacterListViewController extension.
 extension RMCharacterListViewController {
     private func setUpView() {
         characterListView.delegate = self
@@ -38,8 +39,7 @@ extension RMCharacterListViewController {
     }
 }
 
-// MARK: - RMCharacterListViewDelegate extension
-
+/// RMCharacterListViewController + RMCharacterListViewDelegate extension.
 extension RMCharacterListViewController: RMCharacterListViewDelegate {
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {
         /// Open detail controller for that character
@@ -48,8 +48,4 @@ extension RMCharacterListViewController: RMCharacterListViewDelegate {
         detailVC.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(detailVC, animated: true)
     }
-}
-
-#Preview {
-    RMCharacterListViewController()
 }
