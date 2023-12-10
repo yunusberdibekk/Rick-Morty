@@ -35,7 +35,7 @@ final class RMCharacterDetailView: UIView {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("Unsupported")
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func createCollectionView() -> UICollectionView {
@@ -44,8 +44,14 @@ final class RMCharacterDetailView: UIView {
         }
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(
-            UICollectionViewCell.self,
-            forCellWithReuseIdentifier: "cell")
+            RMCharacterPhotoCollectionViewCell.self,
+            forCellWithReuseIdentifier: RMCharacterPhotoCollectionViewCell.cellIdentifier)
+        collectionView.register(
+            RMCharacterInformationCollectionViewCell.self,
+            forCellWithReuseIdentifier: RMCharacterInformationCollectionViewCell.cellIdentifier)
+        collectionView.register(
+            RMCharacterEpisodeCollectionViewCell.self,
+            forCellWithReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }

@@ -29,7 +29,7 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("Unsupported")
+        fatalError("init(coder:) has not been implemented")
     }
 
     public func startAnimating() {

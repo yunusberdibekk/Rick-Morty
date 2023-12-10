@@ -49,7 +49,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("Unsupported")
+        fatalError("init(coder:) has not been implemented")
     }
 
     /// It will reset previous cell values when created new cell.

@@ -24,7 +24,7 @@ class RMCharacterDetailViewController: UIViewController {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("Unsupported")
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -64,27 +64,47 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+        let sectionType = viewModel.sections[section]
+        switch sectionType {
+        case .photo:
             return 1
-        case 1:
-            return 8
-        case 2:
-            return 20
-        default:
-            return 1
+        case .information(let viewModels):
+            return viewModels.count
+        case .episodes(let viewModels):
+            return viewModels.count
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        if indexPath.section == 0 {
-            cell.backgroundColor = .systemPink
-        } else if indexPath.section == 1 {
-            cell.backgroundColor = .systemGreen
-        } else {
-            cell.backgroundColor = .systemBlue
+        let sectionType = viewModel.sections[indexPath.section]
+        switch sectionType {
+        case .photo(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RMCharacterPhotoCollectionViewCell.cellIdentifier,
+                for: indexPath) as? RMCharacterPhotoCollectionViewCell
+            else {
+                fatalError("Unsupported")
+            }
+            cell.configure(with: viewModel)
+            return cell
+        case .information(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RMCharacterInformationCollectionViewCell.cellIdentifier,
+                for: indexPath) as? RMCharacterInformationCollectionViewCell
+            else {
+                fatalError("Unsupported")
+            }
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
+        case .episodes(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier,
+                for: indexPath) as? RMCharacterEpisodeCollectionViewCell
+            else {
+                fatalError("Unsupported")
+            }
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
         }
-        return cell
     }
 }

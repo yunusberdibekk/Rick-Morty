@@ -11,17 +11,18 @@ final class RMCharacterDetailViewModel {
     /// Properties
     private let character: RMCharacter
 
-    enum SectionType: CaseIterable {
-        case photo
-        case information
-        case episodes
+    enum SectionType {
+        case photo(viewModel: RMCharacterPhotoCollectionViewCellViewModel)
+        case information(viewModels: [RMCharacterInformationCollectionViewCellViewModel])
+        case episodes(viewModels: [RMCharacterEpisodeCollectionViewCellViewModel])
     }
 
-    public let sections: [SectionType] = SectionType.allCases
+    public var sections: [SectionType] = .init()
 
     /// Lifecycle
     init(character: RMCharacter) {
         self.character = character
+        setUpSections()
     }
 
     private var requestURL: URL? {
@@ -35,6 +36,26 @@ final class RMCharacterDetailViewModel {
 
 /// RMCharacterDetailViewModel extension for Layouts.
 extension RMCharacterDetailViewModel {
+    private func setUpSections() {
+        sections = [
+            .photo(viewModel: .init(imageURL: URL(string: character.image))),
+            .information(viewModels: [
+                .init(value: character.status.text, title: "Status"),
+                .init(value: character.gender.rawValue, title: "Gender"),
+                .init(value: character.type, title: "Type"),
+                .init(value: character.species, title: "Species"),
+                .init(value: character.origin.name, title: "Origin"),
+                .init(value: character.location.name, title: "Location"),
+                .init(value: character.created, title: "Created"),
+                .init(value: "\(character.episode.count)", title: "Total Episode"),
+            ]),
+            .episodes(viewModels:
+                character.episode.compactMap {
+                    RMCharacterEpisodeCollectionViewCellViewModel(episodeDataURL: URL(string: $0))
+                }),
+        ]
+    }
+
     public func createPhotoSectionLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
