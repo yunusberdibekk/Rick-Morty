@@ -29,6 +29,10 @@ final class RMCharacterDetailViewModel {
         URL(string: character.url)
     }
 
+    public var episodes: [String] {
+        character.episode
+    }
+
     public var title: String {
         character.name.uppercased()
     }
@@ -51,7 +55,7 @@ extension RMCharacterDetailViewModel {
             ]),
             .episodes(viewModels:
                 character.episode.compactMap {
-                    RMCharacterEpisodeCollectionViewCellViewModel(episodeDataURL: URL(string: $0))
+                    RMCharacterEpisodeCollectionViewCellViewModel(episodeDataUrl: URL(string: $0))
                 }),
         ]
     }
