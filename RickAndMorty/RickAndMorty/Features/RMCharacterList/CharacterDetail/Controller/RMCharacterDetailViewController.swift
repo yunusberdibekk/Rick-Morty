@@ -114,12 +114,6 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
         case .photo, .information:
             break
         case .episodes:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier,
-                for: indexPath) as? RMCharacterEpisodeCollectionViewCell
-            else {
-                fatalError("Unsupported")
-            }
             let episodes = viewModel.episodes
             let selection = episodes[indexPath.row]
             let vc = RMEpisodeDetailViewController(url: URL(string: selection))

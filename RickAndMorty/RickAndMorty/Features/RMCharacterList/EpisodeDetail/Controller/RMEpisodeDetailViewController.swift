@@ -10,12 +10,12 @@ import UIKit
 /// VC to show details about single episode.
 final class RMEpisodeDetailViewController: UIViewController {
     /// Properties
-    private let url: URL?
-    
+    private let viewModel: RMEpisodeDetailViewModel
+
     /// Lifecycle
     /// - Parameter url: Url of the episode to be displayed.
     init(url: URL?) {
-        self.url = url
+        self.viewModel = RMEpisodeDetailViewModel(url: url)
         super.init(nibName: nil, bundle: nil)
     }
 
