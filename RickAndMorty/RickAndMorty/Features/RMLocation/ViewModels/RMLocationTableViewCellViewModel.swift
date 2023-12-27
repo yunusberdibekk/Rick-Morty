@@ -19,7 +19,7 @@ final class RMLocationTableViewCellViewModel: Hashable, Equatable {
     }
     
     public var type: String {
-        location.type
+        "Type: " + location.type
     }
     
     public var dimension: String {
@@ -27,7 +27,7 @@ final class RMLocationTableViewCellViewModel: Hashable, Equatable {
     }
     
     static func == (lhs: RMLocationTableViewCellViewModel, rhs: RMLocationTableViewCellViewModel) -> Bool {
-        return lhs.location.id == rhs.location.id
+        return lhs.location.id == rhs.location.id  
     }
     
     func hash(into hasher: inout Hasher) {
