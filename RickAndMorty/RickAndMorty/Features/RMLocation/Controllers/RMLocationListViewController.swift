@@ -21,6 +21,8 @@ final class RMLocationListViewController: UIViewController {
         title = "Locations"
         addSearchButton()
         addConstraints()
+        viewModel.delegate = self
+        viewModel.fetchLocations()
     }
 
     private func addSearchButton() {
@@ -38,5 +40,11 @@ extension RMLocationListViewController {
             primaryView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             primaryView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+}
+
+extension RMLocationListViewController: RMLocationViewModelDelegate {
+    func didFetchInitialLocations() {
+        primaryView.configure(with: viewModel)
     }
 }
