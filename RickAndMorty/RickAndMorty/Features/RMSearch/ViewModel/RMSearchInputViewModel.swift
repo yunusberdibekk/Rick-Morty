@@ -8,5 +8,48 @@
 import Foundation
 
 final class RMSearchInputViewModel {
-    init() {}
+    enum DynamicOption: String {
+        case status = "Status"
+        case gender = "Gender"
+        case locationType = "Location Type"
+    }
+
+    private let type: RMSearchViewController.Config.`Type`
+
+    init(type: RMSearchViewController.Config.`Type`) {
+        self.type = type
+    }
+
+    // MARK: - Public
+
+    public var hasDynamicOptions: Bool {
+        switch type {
+        case .character, .location:
+            true
+        case .episode:
+            false
+        }
+    }
+
+    public var options: [DynamicOption] {
+        switch type {
+        case .character:
+            return [.status, .gender]
+        case .episode:
+            return []
+        case .location:
+            return [.locationType]
+        }
+    }
+
+    public var searchPlaceholderText: String {
+        switch type {
+        case .character:
+            return "Character Name"
+        case .episode:
+            return "Episode Title"
+        case .location:
+            return "Location Name"
+        }
+    }
 }

@@ -47,6 +47,7 @@ final class RMEpisodeListView: UIView {
     /// - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
         addSubviews(collectionView, spinner)
         addConstraints()
