@@ -50,7 +50,7 @@ final class RMLocationViewModel {
                     self?.delegate?.didFetchInitialLocations()
                 }
             case .failure(let error):
-                break
+                print(error.localizedDescription)
             }
         }
     }
