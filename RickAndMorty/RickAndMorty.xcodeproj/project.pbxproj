@@ -29,6 +29,7 @@
 		BE5090432B3D1A2900A98B5B /* RMNoSearchResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5090422B3D1A2900A98B5B /* RMNoSearchResultsViewModel.swift */; };
 		BE5090452B3D1A5100A98B5B /* RMSearchInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5090442B3D1A5100A98B5B /* RMSearchInputView.swift */; };
 		BE5090472B3D1A5F00A98B5B /* RMSearchInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5090462B3D1A5F00A98B5B /* RMSearchInputViewModel.swift */; };
+		BE5090492B3D514B00A98B5B /* RMSearchOptionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5090482B3D514B00A98B5B /* RMSearchOptionPickerViewController.swift */; };
 		BE7C29212B1E5B760042F780 /* RMCharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7C29202B1E5B760042F780 /* RMCharacterListViewModel.swift */; };
 		BE7C29232B1E5BE80042F780 /* RMCharacterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7C29222B1E5BE80042F780 /* RMCharacterListView.swift */; };
 		BE7C29252B1E60320042F780 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7C29242B1E60320042F780 /* UIView+Extensions.swift */; };
@@ -97,6 +98,7 @@
 		BE5090422B3D1A2900A98B5B /* RMNoSearchResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMNoSearchResultsViewModel.swift; sourceTree = "<group>"; };
 		BE5090442B3D1A5100A98B5B /* RMSearchInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchInputView.swift; sourceTree = "<group>"; };
 		BE5090462B3D1A5F00A98B5B /* RMSearchInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchInputViewModel.swift; sourceTree = "<group>"; };
+		BE5090482B3D514B00A98B5B /* RMSearchOptionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchOptionPickerViewController.swift; sourceTree = "<group>"; };
 		BE7C29202B1E5B760042F780 /* RMCharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterListViewModel.swift; sourceTree = "<group>"; };
 		BE7C29222B1E5BE80042F780 /* RMCharacterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterListView.swift; sourceTree = "<group>"; };
 		BE7C29242B1E60320042F780 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				BED12EE22B2A945A0088091B /* RMSearchViewController.swift */,
+				BE5090482B3D514B00A98B5B /* RMSearchOptionPickerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				BE90AFF62B20C71300C2B777 /* RMFooterLoadingCollectionReusableView.swift in Sources */,
 				BE38C0F42B1AF81B00E5E23F /* RMCharacterGender.swift in Sources */,
 				BE5090452B3D1A5100A98B5B /* RMSearchInputView.swift in Sources */,
+				BE5090492B3D514B00A98B5B /* RMSearchOptionPickerViewController.swift in Sources */,
 				BED12EF32B2B633F0088091B /* RMSettingsViewModel.swift in Sources */,
 				BE5090412B3D1A1000A98B5B /* RMNoSearchResultsView.swift in Sources */,
 				BECF22952B13654800B6FD43 /* RMLocationListViewController.swift in Sources */,
@@ -792,8 +796,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -822,8 +825,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

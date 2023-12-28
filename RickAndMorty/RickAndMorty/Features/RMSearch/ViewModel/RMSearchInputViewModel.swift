@@ -12,6 +12,17 @@ final class RMSearchInputViewModel {
         case status = "Status"
         case gender = "Gender"
         case locationType = "Location Type"
+
+        var choices: [String] {
+            switch self {
+            case .status:
+                ["alive", "dead", "unknown"]
+            case .gender:
+                ["male", "female", "genderless", "unknown"]
+            case .locationType:
+                ["cluster", "planet", "microverse"]
+            }
+        }
     }
 
     private let type: RMSearchViewController.Config.`Type`

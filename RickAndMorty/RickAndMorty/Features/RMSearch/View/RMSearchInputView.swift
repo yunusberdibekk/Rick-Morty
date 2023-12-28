@@ -22,6 +22,8 @@ final class RMSearchInputView: UIView {
         return searchBar
     }()
 
+    private var stackView: UIStackView?
+
     // MARK: - Properties
 
     weak var delegate: RMSearchInputViewDelegate?
@@ -82,6 +84,7 @@ final class RMSearchInputView: UIView {
 
     private func createOptionStackView() -> UIStackView {
         let stackView = UIStackView()
+        self.stackView = stackView
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 6
@@ -115,6 +118,23 @@ final class RMSearchInputView: UIView {
     public func configure(with viewModel: RMSearchInputViewModel) {
         searchBar.placeholder = viewModel.searchPlaceholderText
         self.viewModel = viewModel
+    }
+
+    public func update(option: RMSearchInputViewModel.DynamicOption, value: String) {
+        guard let buttons = stackView?.arrangedSubviews as? [UIButton],
+              let allOptions = viewModel?.options,
+              let index = allOptions.firstIndex(of: option)
+        else { return }
+        buttons[index].setAttributedTitle(
+            NSAttributedString(
+                string: value.uppercased(),
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: 18, weight: .medium),
+                    .foregroundColor: UIColor.link,
+                ]
+            ),
+            for: .normal
+        )
     }
 }
 
