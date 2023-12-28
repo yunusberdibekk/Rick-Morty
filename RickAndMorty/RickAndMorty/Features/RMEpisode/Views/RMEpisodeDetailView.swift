@@ -13,7 +13,7 @@ protocol RMEpisodeDetailViewDelegate: AnyObject {
         didSelect character: RMCharacter)
 }
 
-class RMEpisodeDetailView: UIView {
+final class RMEpisodeDetailView: UIView {
     /// Properties
     public weak var delegate: RMEpisodeDetailViewDelegate?
 

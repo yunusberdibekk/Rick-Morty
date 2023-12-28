@@ -8,7 +8,7 @@
 import UIKit
 
 /// Controller to show info about single character
-class RMCharacterDetailViewController: UIViewController {
+final class RMCharacterDetailViewController: UIViewController {
     /// Properties
     private let viewModel: RMCharacterDetailViewModel
 

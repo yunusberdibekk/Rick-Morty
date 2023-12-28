@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RMCharacterPhotoCollectionViewCell: UICollectionViewCell {
+final class RMCharacterPhotoCollectionViewCell: UICollectionViewCell {
     /// Properties
     static let cellIdentifier: String = "RMCharacterPhotoCollectionViewCell"
 

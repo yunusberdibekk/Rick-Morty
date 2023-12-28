@@ -7,14 +7,32 @@
 
 import UIKit
 
+// Dynamic search option view
+// Render results
+// Render no results zero state
+// Searching / API CALL
+
 /// Configurable controller to search.
-class RMSearchViewController: UIViewController {
+final class RMSearchViewController: UIViewController {
     /// Properties
+
+    /// Configuration for search session
     struct Config {
         enum `Type` {
-            case character
-            case episode
-            case location
+            case character // name | status | gender
+            case episode // name
+            case location //  name | type
+
+            var title: String {
+                switch self {
+                case .character:
+                    "Search Characters"
+                case .episode:
+                    "Search Episodes"
+                case .location:
+                    "Search Locations"
+                }
+            }
         }
 
         let type: `Type`
@@ -22,7 +40,7 @@ class RMSearchViewController: UIViewController {
 
     private let config: Config
 
-    /// Lifecycle
+    /// Init
     init(config: Config) {
         self.config = config
         super.init(nibName: nil, bundle: nil)
@@ -33,9 +51,10 @@ class RMSearchViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Search"
+        title = config.type.title
         view.backgroundColor = .systemBackground
     }
 }

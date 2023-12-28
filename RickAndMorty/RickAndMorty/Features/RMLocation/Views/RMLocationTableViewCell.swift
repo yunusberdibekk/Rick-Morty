@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RMLocationTableViewCell: UITableViewCell {
+final class RMLocationTableViewCell: UITableViewCell {
     static let cellIdentifier: String = "RMLocationTableViewCell"
 
     /// Components
