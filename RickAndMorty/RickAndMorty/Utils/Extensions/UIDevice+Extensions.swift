@@ -9,5 +9,5 @@ import UIKit
 
 extension UIDevice {
     /// Check if current device is phone idiom
-    static let isiPhone = UIDevice.current.userInterfaceIdiom == .phone
+    static let isIphone = UIDevice.current.userInterfaceIdiom == .phone
 }
