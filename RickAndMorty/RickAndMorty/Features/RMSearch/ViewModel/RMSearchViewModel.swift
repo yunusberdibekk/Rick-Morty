@@ -12,6 +12,7 @@ final class RMSearchViewModel {
 
     let config: RMSearchViewController.Config
     private var optionMapUpdateBlock: (((RMSearchInputViewModel.DynamicOption, String)) -> Void)?
+    private var searchResultHandler: ((RMSearchResultViewModel) -> Void)?
     private var optionMap: [RMSearchInputViewModel.DynamicOption: String] = [:]
     private var searchText: String = ""
 
@@ -23,7 +24,79 @@ final class RMSearchViewModel {
 
     // MARK: - Public
 
-    public func executeSearch() {}
+    public func registerSearchResultHandler(_ block: @escaping (RMSearchResultViewModel) -> Void) {
+        searchResultHandler = block
+    }
+
+    /// It will execute search based on the searchText.
+    /// ```
+    /// https://rickandmortyapi.com/api/character/?name=rick
+    /// https://rickandmortyapi.com/api/character/?name=rick&status=alive
+    /// https://rickandmortyapi.com/api/character/?name=rick&gender=male
+    /// https://rickandmortyapi.com/api/character/?name=rick&status=alive&gender=male
+    /// ```
+    public func executeSearch() {
+        // Build arguments
+        var queryParams: [URLQueryItem] = [
+            URLQueryItem(name: "name", value: searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
+        ]
+        // Add options
+        queryParams.append(contentsOf: optionMap.enumerated().compactMap { _, element in
+            let key: RMSearchInputViewModel.DynamicOption = element.key
+            let value: String = element.value
+            return URLQueryItem(name: key.queryArgument, value: value)
+        })
+        // Create request
+        let request = RMRequest(endpoint: config.type.endpoint, queryParameters: queryParams)
+        switch config.type.endpoint {
+        case .character:
+            makeSearchAPICall(RMGetAllCharactersResponse.self, request: request)
+        case .location:
+            makeSearchAPICall(RMGetAllLocationsResponse.self, request: request)
+        case .episode:
+            makeSearchAPICall(RMGetAllEpisodesResponse.self, request: request)
+        }
+    }
+
+    private func makeSearchAPICall<T: Codable>(_ type: T.Type, request: RMRequest) {
+        RMService.shared.execute(request, expecting: type) { [weak self] result in
+            switch result {
+            case .success(let model):
+                self?.processSearchResults(model: model)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    private func processSearchResults(model: Codable) {
+        var resultsVM: RMSearchResultViewModel?
+        if let charactersResults = model as? RMGetAllCharactersResponse {
+            resultsVM = .characters(charactersResults.results.compactMap {
+                RMCharacterCollectionViewCellViewModel(
+                    characterName: $0.name,
+                    characterStatus: $0.status,
+                    characterImageURL: URL(string: $0.image))
+            })
+        }
+        else if let episodesResults = model as? RMGetAllEpisodesResponse {
+            resultsVM = .episodes(episodesResults.results.compactMap {
+                RMCharacterEpisodeCollectionViewCellViewModel(episodeDataUrl: URL(string: $0.url))
+            })
+        }
+        else if let locationsResults = model as? RMGetAllLocationsResponse {
+            resultsVM = .locations(locationsResults.results.compactMap {
+                RMLocationTableViewCellViewModel(location: $0)
+            })
+        }
+
+        if let results = resultsVM {
+            searchResultHandler?(results)
+        }
+        else {
+            // fallback error
+        }
+    }
 
     public func set(query text: String) {
         searchText = text

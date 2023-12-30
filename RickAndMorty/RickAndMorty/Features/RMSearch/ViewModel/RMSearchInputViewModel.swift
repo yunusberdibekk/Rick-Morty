@@ -23,6 +23,17 @@ final class RMSearchInputViewModel {
                 ["cluster", "planet", "microverse"]
             }
         }
+
+        var queryArgument: String {
+            switch self {
+            case .status:
+                "status"
+            case .gender:
+                "gender"
+            case .locationType:
+                "type"
+            }
+        }
     }
 
     private let type: RMSearchViewController.Config.`Type`

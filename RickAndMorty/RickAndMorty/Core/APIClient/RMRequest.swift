@@ -25,14 +25,13 @@ final class RMRequest {
     private var urlString: String {
         var string = Constants.baseURL
         string += "/"
-        string += endpoint.rawValue
-
+        string += endpoint.rawValue // https://rickandmortyapi.com/api/characters |
+        // https://rickandmortyapi.com/api/episode
         if !pathComponents.isEmpty {
             pathComponents.forEach {
                 string += "/\($0)"
             }
         }
-
         if !queryParameters.isEmpty {
             string += "?"
             // name=value&name=value&
@@ -42,7 +41,6 @@ final class RMRequest {
             }.joined(separator: "&")
             string += argumentString
         }
-
         return string
     }
 
@@ -69,12 +67,16 @@ final class RMRequest {
 
     /// Attempt to create request.
     /// - Parameter url: URL to parse.
+    /// ```
+    /// ```
     convenience init?(url: URL) {
         let string = url.absoluteString
         if !string.contains(Constants.baseURL) {
             return nil
         }
+        /// "https://rickandmortapi.com/api/character/page=2" -> "character/page=2"
         let trimmed = string.replacingOccurrences(of: Constants.baseURL + "/", with: "")
+        /// "character/page=2"
         if trimmed.contains("/") {
             let components = trimmed.components(separatedBy: "/")
             if !components.isEmpty {
