@@ -44,7 +44,9 @@ final class RMSearchResultsView: UIView {
     // MARK: - Properties
 
     weak var delegate: RMSearchResultsViewDelegate?
+    // TableView viewmodels.
     private var locationCellViewModels: [RMLocationTableViewCellViewModel] = []
+    // CollectionView viewmodels.
     private var collectionViewCellViewModels: [any Hashable] = []
 
     private var viewModel: RMSearchResultViewModel? {
@@ -72,7 +74,7 @@ final class RMSearchResultsView: UIView {
 
     private func processViewModel() {
         guard let viewModel = viewModel else { return }
-        switch viewModel {
+        switch viewModel.results {
         case .characters(let viewModels):
             collectionViewCellViewModels = viewModels
             setUpCollectionView()
@@ -118,7 +120,7 @@ extension RMSearchResultsView {
     }
 }
 
-// MARK: - TableView
+// MARK: - TableViewDelegate, TableViewDataSource
 
 extension RMSearchResultsView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,7 +144,7 @@ extension RMSearchResultsView: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - CollectionView
+// MARK: - CollectionViewDelegate, CollectionViewDataSource, CollectionViewDelegateFlowLayout
 
 extension RMSearchResultsView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -187,5 +189,50 @@ extension RMSearchResultsView: UICollectionViewDelegate, UICollectionViewDataSou
         let bounds = collectionView.bounds
         let width = bounds.width - 20
         return CGSize(width: width, height: 100)
+    }
+}
+
+// MARK: - ScrollViewDelegate
+
+extension RMSearchResultsView: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !locationCellViewModels.isEmpty {
+            handleLocationPagination(scrollView: scrollView)
+        } else {
+            handleCharacterOrEpisodePagination(scrollView: scrollView)
+        }
+    }
+
+    private func handleCharacterOrEpisodePagination(scrollView: UIScrollView) {}
+
+    private func handleLocationPagination(scrollView: UIScrollView) {
+        guard let viewModel = viewModel,
+              !locationCellViewModels.isEmpty,
+              viewModel.shouldShowLoadMoreIndicator,
+              !viewModel.isLoadingMoreResults
+        else {
+            return
+        }
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
+            let offset = scrollView.contentOffset.y
+            let totalContentHeight = scrollView.contentSize.height
+            let totalScrollViewFixedHeight = scrollView.frame.size.height
+            if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
+                DispatchQueue.main.async {
+                    self?.showLoadingIndicator()
+                }
+                viewModel.fetchAdditionalLocations { [weak self] newResults in
+                    self?.tableView.tableFooterView = nil
+                    self?.locationCellViewModels = newResults
+                    self?.tableView.reloadData()
+                }
+            }
+            timer.invalidate()
+        }
+    }
+
+    private func showLoadingIndicator() {
+        let footer = RMTableLoadingFooterView(frame: CGRect(x: .zero, y: .zero, width: frame.size.width, height: 100))
+        tableView.tableFooterView = footer
     }
 }
