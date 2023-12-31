@@ -1,4 +1,4 @@
-# RickAndMorty
+# Rick&Morty
 
 ## Built With
 - [Swift](https://developer.apple.com/swift/)
