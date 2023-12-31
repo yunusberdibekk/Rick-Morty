@@ -8,23 +8,24 @@
 import UIKit
 
 protocol RMSearchViewDelegate: AnyObject {
-    func rmSearchView(_ searchView: RMSearchView,
-                      didSelectOption option: RMSearchInputViewModel.DynamicOption)
-    func rmSearchView(_ searchView: RMSearchView,
-                      didSelectLocation location: RMLocation)
+    func rmSearchView(_ searchView: RMSearchView, didSelectOption option: RMSearchInputViewModel.DynamicOption)
+
+    func rmSearchView(_ searchView: RMSearchView, didSelectLocation location: RMLocation)
+    func rmSearchView(_ searchView: RMSearchView, didSelectCharacter character: RMCharacter)
+    func rmSearchView(_ searchView: RMSearchView, didSelectEpisode episode: RMEpisode)
 }
 
 final class RMSearchView: UIView {
-    // MARK: - Components
-
-    private let noResultsView: RMNoSearchResultsView = .init()
-    private let searchInputView: RMSearchInputView = .init()
-    private let resultsView: RMSearchResultsView = .init()
-
     // MARK: - Properties
 
     weak var delegate: RMSearchViewDelegate?
     private let viewModel: RMSearchViewModel
+
+    // MARK: - Components
+
+    private let searchInputView = RMSearchInputView()
+    private let noResultsView = RMNoSearchResultsView()
+    private let resultsView = RMSearchResultsView()
 
     // MARK: - Init
 
@@ -33,7 +34,7 @@ final class RMSearchView: UIView {
         super.init(frame: frame)
         backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
-        addSubviews(noResultsView, searchInputView, resultsView)
+        addSubviews(resultsView, noResultsView, searchInputView)
         addConstraints()
         searchInputView.configure(with: RMSearchInputViewModel(type: viewModel.config.type))
         searchInputView.delegate = self
@@ -43,16 +44,12 @@ final class RMSearchView: UIView {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public func presentKeyboard() {
-        searchInputView.presentKeyboard()
+        fatalError()
     }
 
     private func setUpHandlers(viewModel: RMSearchViewModel) {
-        viewModel.registerOptionChangeBlock { [weak self] tuple in
-            self?.searchInputView.update(option: tuple.0, value: tuple.1)
+        viewModel.registerOptionChangeBlock { tuple in
+            self.searchInputView.update(option: tuple.0, value: tuple.1)
         }
         viewModel.registerSearchResultHandler { [weak self] result in
             DispatchQueue.main.async {
@@ -68,11 +65,17 @@ final class RMSearchView: UIView {
             }
         }
     }
+
+    public func presentKeyboard() {
+        searchInputView.presentKeyboard()
+    }
 }
 
+/// Privatized UI functions.
 extension RMSearchView {
     private func addConstraints() {
         NSLayoutConstraint.activate([
+            // Search input view
             searchInputView.topAnchor.constraint(equalTo: topAnchor),
             searchInputView.leftAnchor.constraint(equalTo: leftAnchor),
             searchInputView.rightAnchor.constraint(equalTo: rightAnchor),
@@ -92,11 +95,11 @@ extension RMSearchView {
     }
 }
 
-// MARK: - CollectionView
+// MARK: - RMSearchView + UICollectionViewDelegate, UICollectionViewDataSource extension.
 
 extension RMSearchView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        0
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -109,7 +112,7 @@ extension RMSearchView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 }
 
-// MARK: -  RMSearchInputViewDeleagate
+// MARK: - RMSearchView + RMSearchInputViewDelegate extension.
 
 extension RMSearchView: RMSearchInputViewDelegate {
     func rmSearchInputView(_ inputView: RMSearchInputView, didSelectOption option: RMSearchInputViewModel.DynamicOption) {
@@ -125,11 +128,27 @@ extension RMSearchView: RMSearchInputViewDelegate {
     }
 }
 
-// MARK: - RMSearchResultsViewDelegate
+// MARK: - RMSearchView + RMSearchResultsViewDelegate extension.
 
 extension RMSearchView: RMSearchResultsViewDelegate {
     func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapLocationAt index: Int) {
-        guard let locationModel = viewModel.locationSearchResult(at: index) else { return }
+        guard let locationModel = viewModel.locationSearchResult(at: index) else {
+            return
+        }
         delegate?.rmSearchView(self, didSelectLocation: locationModel)
+    }
+
+    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapEpisodeAt index: Int) {
+        guard let episodeModel = viewModel.episodeSearchResult(at: index) else {
+            return
+        }
+        delegate?.rmSearchView(self, didSelectEpisode: episodeModel)
+    }
+
+    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapCharacterAt index: Int) {
+        guard let characterModel = viewModel.characterSearchResult(at: index) else {
+            return
+        }
+        delegate?.rmSearchView(self, didSelectCharacter: characterModel)
     }
 }

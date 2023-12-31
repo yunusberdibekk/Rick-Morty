@@ -9,12 +9,12 @@ import UIKit
 
 /// Controller to show and search for Episodes
 final class RMEpisodeListViewController: UIViewController {
-    /// Properties
+    // MARK: - Components
 
-    /// Components
     private let episodeListView = RMEpisodeListView()
 
-    /// Lifecycle
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -32,8 +32,6 @@ final class RMEpisodeListViewController: UIViewController {
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
-
-    // MARK: - RMEpisodeListViewDelegate
 }
 
 /// Privatized UI functions.
@@ -50,7 +48,8 @@ extension RMEpisodeListViewController {
     }
 }
 
-/// RMEpisodeListViewController + RMEpisodeListViewDelegate extension.
+// MARK: - RMEpisodeListViewController + RMEpisodeListViewDelegate extension.
+
 extension RMEpisodeListViewController: RMEpisodeListViewDelegate {
     func rmEpisodeListView(_ characterListView: RMEpisodeListView, didSelectEpisode episode: RMEpisode) {
         // Open detail controller for that episode

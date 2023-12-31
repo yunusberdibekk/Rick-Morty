@@ -5,7 +5,6 @@
 //  Created by Yunus Emre Berdibek on 26.11.2023.
 //
 
-import SwiftUI
 import UIKit
 
 /// Controller to house tabs and route tab controllers.
@@ -14,10 +13,6 @@ final class RMTabViewController: UITabBarController {
         super.viewDidLoad()
         setUpTabs()
     }
-}
-
-#Preview {
-    RMTabViewController()
 }
 
 /// RMTabViewController extension.

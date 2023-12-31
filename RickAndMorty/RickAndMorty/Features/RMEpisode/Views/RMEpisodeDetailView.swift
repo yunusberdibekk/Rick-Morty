@@ -14,7 +14,8 @@ protocol RMEpisodeDetailViewDelegate: AnyObject {
 }
 
 final class RMEpisodeDetailView: UIView {
-    /// Properties
+    // MARK: - Properties
+
     public weak var delegate: RMEpisodeDetailViewDelegate?
 
     private var viewModel: RMEpisodeDetailViewModel? {
@@ -28,7 +29,8 @@ final class RMEpisodeDetailView: UIView {
         }
     }
 
-    /// Components
+    // MARK: - Components
+
     private var collectionView: UICollectionView?
 
     private let spinner: UIActivityIndicatorView = {
@@ -38,7 +40,8 @@ final class RMEpisodeDetailView: UIView {
         return spinner
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
@@ -137,7 +140,7 @@ extension RMEpisodeDetailView {
     private func createCharacterLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
-                widthDimension: .fractionalWidth(0.5),
+                widthDimension: .fractionalWidth(UIDevice.isIphone ? 0.5 : 0.25),
                 heightDimension: .fractionalHeight(1.0)))
 
         item.contentInsets = NSDirectionalEdgeInsets(
@@ -149,13 +152,15 @@ extension RMEpisodeDetailView {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(260)),
-            subitems: [item, item])
+                heightDimension: .absolute(UIDevice.isIphone ? 260 : 320)),
+            subitems: UIDevice.isIphone ? [item, item] : [item, item, item, item])
 
         let section = NSCollectionLayoutSection(group: group)
         return section
     }
 }
+
+// MARK: - RMEpisodeDetailView + UICollectionViewDelegate,UICollectionViewDataSource extension.
 
 extension RMEpisodeDetailView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {

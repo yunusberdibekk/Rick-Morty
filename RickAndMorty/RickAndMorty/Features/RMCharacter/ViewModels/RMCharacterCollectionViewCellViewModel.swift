@@ -8,12 +8,14 @@
 import Foundation
 
 final class RMCharacterCollectionViewCellViewModel: Hashable, Equatable {
-    /// Properties
+    // MARK: - Properties
+
     public let characterName: String
     private let characterStatus: RMCharacterStatus
     private let characterImageURL: URL?
 
-    /// Init
+    // MARK: - Init
+
     init(characterName: String, characterStatus: RMCharacterStatus, characterImageURL: URL?) {
         self.characterName = characterName
         self.characterStatus = characterStatus

@@ -49,7 +49,8 @@ extension RMCharacterListViewController {
     }
 }
 
-/// RMCharacterListViewController + RMCharacterListViewDelegate extension.
+// MARK: - RMCharacterListViewController + RMCharacterListViewDelegate extension.
+
 extension RMCharacterListViewController: RMCharacterListViewDelegate {
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {
         /// Open detail controller for that character
@@ -58,8 +59,4 @@ extension RMCharacterListViewController: RMCharacterListViewDelegate {
         detailVC.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(detailVC, animated: true)
     }
-}
-
-#Preview {
-    RMCharacterListViewController()
 }

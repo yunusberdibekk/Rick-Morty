@@ -9,9 +9,12 @@ import UIKit
 
 /// View for single character info
 final class RMCharacterDetailView: UIView {
-    /// Properties
+    // MARK: - Properties
+
     private var viewModel: RMCharacterDetailViewModel
-    /// Components
+
+    // MARK: - Components
+
     public var collectionView: UICollectionView?
 
     private let spinner: UIActivityIndicatorView = {
@@ -21,7 +24,8 @@ final class RMCharacterDetailView: UIView {
         return spinner
     }()
 
-    /// Init
+    // MARK: - Init
+
     init(frame: CGRect, viewModel: RMCharacterDetailViewModel) {
         self.viewModel = viewModel
         super.init(frame: frame)

@@ -12,7 +12,8 @@ protocol RMEpisodeDetailViewModelDelegate: AnyObject {
 }
 
 final class RMEpisodeDetailViewModel {
-    /// Properties
+    // MARK: - Properties
+
     public private(set) var cellViewModels: [SectionType] = []
     public var delegate: RMEpisodeDetailViewModelDelegate?
     private let endpointUrl: URL?
@@ -29,7 +30,8 @@ final class RMEpisodeDetailViewModel {
         }
     }
 
-    /// Init
+    // MARK: - Init
+
     init(url: URL?) {
         self.endpointUrl = url
     }
@@ -112,7 +114,6 @@ final class RMEpisodeDetailViewModel {
 }
 
 /*
- Bu Swift kodu, DispatchGroup kullanarak çoklu asenkron işlemleri izlemek için tasarlanmış gibi görünüyor. Kodun içeriği şu şekilde açıklanabilir:
  DispatchGroup oluşturulur. Bu, grup içindeki işlemlerin tamamlanmasını beklemek için kullanılır.
  RMCharacter türünden bir dizi oluşturulur. Bu dizi, her bir asenkron işlemden elde edilen RMCharacter modellerini içerecek.
  requests adlı bir döngüde dönülür. Her bir döngü adımında, bir DispatchGroup işlemine giriş yapılır (group.enter()).

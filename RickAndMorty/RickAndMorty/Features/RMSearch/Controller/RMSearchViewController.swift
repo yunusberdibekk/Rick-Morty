@@ -7,39 +7,31 @@
 
 import UIKit
 
-// Dynamic search option view
-// Render results
-// Render no results zero state
-// Searching / API CALL
-
-/// Configurable controller to search.
+/// Configurable controller to search
 final class RMSearchViewController: UIViewController {
     /// Configuration for search session
     struct Config {
         enum `Type` {
             case character // name | status | gender
             case episode // name
-            case location //  name | type
+            case location // name | type
+
+            var endpoint: RMEndpoint {
+                switch self {
+                case .character: return .character
+                case .episode: return .episode
+                case .location: return .location
+                }
+            }
 
             var title: String {
                 switch self {
                 case .character:
-                    "Search Characters"
-                case .episode:
-                    "Search Episodes"
+                    return "Search Characters"
                 case .location:
-                    "Search Locations"
-                }
-            }
-
-            var endpoint: RMEndpoint {
-                switch self {
-                case .character:
-                    return .character
+                    return "Search Location"
                 case .episode:
-                    return .episode
-                case .location:
-                    return .location
+                    return "Search Episode"
                 }
             }
         }
@@ -47,13 +39,8 @@ final class RMSearchViewController: UIViewController {
         let type: `Type`
     }
 
-    // MARK: -  Components
-
-    private let searchView: RMSearchView
-
-    // MARK: - Properties
-
     private let viewModel: RMSearchViewModel
+    private let searchView: RMSearchView
 
     // MARK: - Init
 
@@ -66,7 +53,7 @@ final class RMSearchViewController: UIViewController {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("Unsupported")
     }
 
     // MARK: - Lifecycle
@@ -75,16 +62,19 @@ final class RMSearchViewController: UIViewController {
         super.viewDidLoad()
         title = viewModel.config.type.title
         view.backgroundColor = .systemBackground
-        view.addSubviews(searchView)
+        view.addSubview(searchView)
         addConstraints()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search",
-                                                            style: .done,
-                                                            target: self, action: #selector(didTapExecuteSearch))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Search",
+            style: .done,
+            target: self,
+            action: #selector(didTapExecuteSearch)
+        )
         searchView.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewDidDisappear(animated)
         searchView.presentKeyboard()
     }
 
@@ -94,6 +84,7 @@ final class RMSearchViewController: UIViewController {
     }
 }
 
+/// Privatized UI functions.
 extension RMSearchViewController {
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -105,7 +96,7 @@ extension RMSearchViewController {
     }
 }
 
-// MARK: - RMSearchViewDelegate
+// MARK: - RMSearchViewController + RMSearchViewDelegate extension.
 
 extension RMSearchViewController: RMSearchViewDelegate {
     func rmSearchView(_ searchView: RMSearchView, didSelectOption option: RMSearchInputViewModel.DynamicOption) {
@@ -121,6 +112,18 @@ extension RMSearchViewController: RMSearchViewDelegate {
 
     func rmSearchView(_ searchView: RMSearchView, didSelectLocation location: RMLocation) {
         let vc = RMLocationDetailViewController(location: location)
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    func rmSearchView(_ searchView: RMSearchView, didSelectCharacter character: RMCharacter) {
+        let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    func rmSearchView(_ searchView: RMSearchView, didSelectEpisode episode: RMEpisode) {
+        let vc = RMEpisodeDetailViewController(url: URL(string: episode.url))
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }

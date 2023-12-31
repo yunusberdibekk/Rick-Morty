@@ -9,13 +9,16 @@ import UIKit
 
 /// VC to show details about single episode.
 final class RMEpisodeDetailViewController: UIViewController {
-    /// Components
-    private let detailView = RMEpisodeDetailView()
+    // MARK: - Properties
 
-    /// Properties
     private let viewModel: RMEpisodeDetailViewModel
 
-    /// Lifecycle
+    // MARK: - Components
+
+    private let detailView = RMEpisodeDetailView()
+
+    // MARK: - Init
+
     /// - Parameter url: Url of the episode to be displayed.
     init(url: URL?) {
         self.viewModel = RMEpisodeDetailViewModel(url: url)
@@ -26,6 +29,8 @@ final class RMEpisodeDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,14 +60,16 @@ extension RMEpisodeDetailViewController {
     }
 }
 
-/// RMEpisodeDetailViewController + RMEpisodeDetailViewModelDelegate extension.
+// MARK: - RMEpisodeDetailViewController + RMEpisodeDetailViewModelDelegate extension.
+
 extension RMEpisodeDetailViewController: RMEpisodeDetailViewModelDelegate {
     func didFetchEpisodeDetails() {
         detailView.configure(with: viewModel)
     }
 }
 
-/// RMEpisodeDetailViewController: RMEpisodeDetailViewDelegate
+// MARK: - RMEpisodeDetailViewController: RMEpisodeDetailViewDelegate extension.
+
 extension RMEpisodeDetailViewController: RMEpisodeDetailViewDelegate {
     func rmEpisodeDetailView(_ detailView: RMEpisodeDetailView, didSelect character: RMCharacter) {
         let vc = RMCharacterDetailViewController(viewModel: .init(character: character))

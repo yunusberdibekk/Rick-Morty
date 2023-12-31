@@ -10,7 +10,8 @@ import UIKit
 final class RMEpisodeInfoCollectionViewCell: UICollectionViewCell {
     static let cellIdentifier: String = "RMEpisodeInfoCollectionViewCell"
 
-    /// Components
+    // MARK: - Components
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -26,6 +27,8 @@ final class RMEpisodeInfoCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .right
         return label
     }()
+
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)

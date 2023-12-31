@@ -8,10 +8,12 @@
 import UIKit
 
 final class RMCharacterInformationCollectionViewCell: UICollectionViewCell {
-    /// Properties
+    // MARK: - Properties
+
     static let cellIdentifier: String = "RMCharacterInformationCollectionViewCell"
 
-    /// Components
+    // MARK: - Components
+
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +44,8 @@ final class RMCharacterInformationCollectionViewCell: UICollectionViewCell {
         return view
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .tertiarySystemBackground

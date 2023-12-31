@@ -7,19 +7,19 @@
 
 import UIKit
 
-// MARK: - Protocols
-
 protocol RMCharacterListViewDelegate: AnyObject {
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter)
 }
 
 /// View that handles showing list of characters, loader, etc.
 final class RMCharacterListView: UIView {
-    /// Properties
+    // MARK: - Properties
+
     private let viewModel: RMCharacterListViewModel = .init()
     public weak var delegate: RMCharacterListViewDelegate?
 
-    /// Components
+    // MARK: - Components
+
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
@@ -31,7 +31,7 @@ final class RMCharacterListView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
-        
+
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isHidden = true
         collectionView.alpha = 0
@@ -44,7 +44,8 @@ final class RMCharacterListView: UIView {
         return collectionView
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +85,8 @@ extension RMCharacterListView {
     }
 }
 
-/// RMCharacterListView + RMCharacterListViewModelDelegate extension.
+// MARK: - RMCharacterListView + RMCharacterListViewModelDelegate extension.
+
 extension RMCharacterListView: RMCharacterListViewModelDelegate {
     func didLoadInitialCharacters() {
         spinner.stopAnimating()

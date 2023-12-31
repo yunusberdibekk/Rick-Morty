@@ -9,11 +9,13 @@ import UIKit
 
 /// Controller to show and search for locations.
 final class RMLocationListViewController: UIViewController {
-    /// Properties
+    // MARK: - Properties
+
     private let primaryView = RMLocationView()
     private let viewModel = RMLocationViewModel()
 
-    /// Lifecycle
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         primaryView.delegate = self
@@ -37,6 +39,7 @@ final class RMLocationListViewController: UIViewController {
     }
 }
 
+/// Privatized UI functions.
 extension RMLocationListViewController {
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -48,11 +51,15 @@ extension RMLocationListViewController {
     }
 }
 
+// MARK: - RMLocationListViewController + RMLocationViewModelDelegate extension.
+
 extension RMLocationListViewController: RMLocationViewModelDelegate {
     func didFetchInitialLocations() {
         primaryView.configure(with: viewModel)
     }
 }
+
+// MARK: - RMLocationListViewController + RMLocationViewDelegate extension.
 
 extension RMLocationListViewController: RMLocationViewDelegate {
     func rmLocationView(_ locationView: RMLocationView, didSelect location: RMLocation) {

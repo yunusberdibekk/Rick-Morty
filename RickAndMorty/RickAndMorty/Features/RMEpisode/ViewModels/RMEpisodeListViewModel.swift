@@ -16,7 +16,8 @@ protocol RMEpisodeListViewModelDelegate: AnyObject {
 
 /// View Model to handle episode list view logic
 final class RMEpisodeListViewModel: NSObject {
-    /// Properties
+    // MARK: - Properties
+
     private var cellViewModels: [RMCharacterEpisodeCollectionViewCellViewModel] = []
     public weak var delegate: RMEpisodeListViewModelDelegate?
     private var apiInfo: RMGetAllEpisodesResponse.Info? = nil
@@ -118,7 +119,8 @@ final class RMEpisodeListViewModel: NSObject {
     }
 }
 
-/// RMEpisodeListViewModel + UICollectionView extension.
+// MARK: - RMEpisodeListViewModel + UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayoutextension.
+
 extension RMEpisodeListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cellViewModels.count
@@ -174,7 +176,8 @@ extension RMEpisodeListViewModel: UICollectionViewDataSource, UICollectionViewDe
     }
 }
 
-/// RMEpisodeListViewModel + UIScrollViewDelegate extension.
+// MARK: - RMEpisodeListViewModel + UIScrollViewDelegate extension.
+
 extension RMEpisodeListViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator,

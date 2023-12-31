@@ -8,9 +8,12 @@
 import UIKit
 
 final class RMLocationTableViewCell: UITableViewCell {
+    // MARK: - Properties
+
     static let cellIdentifier: String = "RMLocationTableViewCell"
 
-    /// Components
+    // MARK: - Components
+
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +36,8 @@ final class RMLocationTableViewCell: UITableViewCell {
         label.textColor = .secondaryLabel
         return label
     }()
+
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -60,6 +65,7 @@ final class RMLocationTableViewCell: UITableViewCell {
     }
 }
 
+/// Privatized UI functions.
 extension RMLocationTableViewCell {
     private func addConstraints() {
         NSLayoutConstraint.activate([

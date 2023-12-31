@@ -8,70 +8,69 @@
 import Foundation
 
 final class RMSearchInputViewModel {
+    // MARK: - Properties
+
+    private let type: RMSearchViewController.Config.`Type`
+
     enum DynamicOption: String {
         case status = "Status"
         case gender = "Gender"
         case locationType = "Location Type"
 
+        var queryArgument: String {
+            switch self {
+            case .status: return "status"
+            case .gender: return "gender"
+            case .locationType: return "type"
+            }
+        }
+
         var choices: [String] {
             switch self {
             case .status:
-                ["alive", "dead", "unknown"]
-            case .gender:
-                ["male", "female", "genderless", "unknown"]
-            case .locationType:
-                ["cluster", "planet", "microverse"]
-            }
-        }
+                return ["alive", "dead", "unknown"]
 
-        var queryArgument: String {
-            switch self {
-            case .status:
-                "status"
             case .gender:
-                "gender"
+                return ["male", "female", "genderless", "unknown"]
+
             case .locationType:
-                "type"
+                return ["cluster", "planet", "microverse"]
             }
         }
     }
-
-    private let type: RMSearchViewController.Config.`Type`
 
     init(type: RMSearchViewController.Config.`Type`) {
         self.type = type
     }
 
-    // MARK: - Public
-
     public var hasDynamicOptions: Bool {
-        switch type {
+        switch self.type {
         case .character, .location:
-            true
+            return true
         case .episode:
-            false
+            return false
         }
     }
 
     public var options: [DynamicOption] {
-        switch type {
+        switch self.type {
         case .character:
             return [.status, .gender]
-        case .episode:
-            return []
         case .location:
             return [.locationType]
+        case .episode:
+            return []
         }
     }
 
     public var searchPlaceholderText: String {
-        switch type {
+        switch self.type {
         case .character:
             return "Character Name"
-        case .episode:
-            return "Episode Title"
         case .location:
             return "Location Name"
+        case .episode:
+            return "Episode Title"
         }
     }
 }

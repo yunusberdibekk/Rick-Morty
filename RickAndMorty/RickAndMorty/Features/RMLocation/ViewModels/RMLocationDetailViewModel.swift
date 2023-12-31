@@ -12,6 +12,8 @@ protocol RMLocationDetailViewModelDelegate: AnyObject {
 }
 
 final class RMLocationDetailViewModel {
+    // MARK: - Properties
+
     private let endpointUrl: URL?
     private var dataTuple: (location: RMLocation, characters: [RMCharacter])? {
         didSet {
@@ -42,8 +44,6 @@ final class RMLocationDetailViewModel {
         return dataTuple.characters[index]
     }
 
-    // MARK: - Private
-
     private func createCellViewModels() {
         guard let dataTuple = dataTuple else {
             return
@@ -64,25 +64,27 @@ final class RMLocationDetailViewModel {
                 .init(title: "Dimension", value: location.dimension),
                 .init(title: "Created", value: createdString),
             ]),
-            .characters(viewModel: characters.compactMap({ character in
-                return RMCharacterCollectionViewCellViewModel(
+            .characters(viewModel: characters.compactMap { character in
+                RMCharacterCollectionViewCellViewModel(
                     characterName: character.name,
                     characterStatus: character.status,
                     characterImageURL: URL(string: character.image)
                 )
-            }))
+            }),
         ]
     }
 
     /// Fetch backing location model
     public func fetchLocationData() {
         guard let url = endpointUrl,
-              let request = RMRequest(url: url) else {
+              let request = RMRequest(url: url)
+        else {
             return
         }
 
         RMService.shared.execute(request,
-                                 expecting: RMLocation.self) { [weak self] result in
+                                 expecting: RMLocation.self)
+        { [weak self] result in
             switch result {
             case .success(let model):
                 self?.fetchRelatedCharacters(location: model)
@@ -93,11 +95,11 @@ final class RMLocationDetailViewModel {
     }
 
     private func fetchRelatedCharacters(location: RMLocation) {
-        let requests: [RMRequest] = location.residents.compactMap({
-            return URL(string: $0)
-        }).compactMap({
-            return RMRequest(url: $0)
-        })
+        let requests: [RMRequest] = location.residents.compactMap {
+            URL(string: $0)
+        }.compactMap {
+            RMRequest(url: $0)
+        }
 
         let group = DispatchGroup()
         var characters: [RMCharacter] = []

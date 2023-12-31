@@ -45,6 +45,7 @@ final class RMSearchOptionPickerViewController: UIViewController {
     }
 }
 
+/// Privatized UI functions.
 extension RMSearchOptionPickerViewController {
     private func setUpTableView() {
         view.addSubviews(tableView)
@@ -59,6 +60,8 @@ extension RMSearchOptionPickerViewController {
         ])
     }
 }
+
+// MARK: - RMSearchOptionPickerViewController + UITableViewDelegate, UITableViewDataSource extension.
 
 extension RMSearchOptionPickerViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,7 +78,7 @@ extension RMSearchOptionPickerViewController: UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let choise = option.choices[indexPath.row]
-        self.selectionBlock(choise)
+        selectionBlock(choise)
         dismiss(animated: true)
     }
 }

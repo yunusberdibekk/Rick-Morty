@@ -16,11 +16,13 @@ protocol RMEpisodeListViewDelegate: AnyObject {
 
 /// View that handles showing list of episodes, loader, etc.
 final class RMEpisodeListView: UIView {
-    /// Properties
+    // MARK: - Properties
+
     public weak var delegate: RMEpisodeListViewDelegate?
     private let viewModel = RMEpisodeListViewModel()
 
-    /// Components
+    // MARK: - Components
+
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
@@ -44,7 +46,8 @@ final class RMEpisodeListView: UIView {
         return collectionView
     }()
 
-    /// - Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
@@ -85,7 +88,8 @@ extension RMEpisodeListView {
     }
 }
 
-/// RMEpisodeListView + RMEpisodeListViewModelDelegate extension.
+// MARK: RMEpisodeListView + RMEpisodeListViewModelDelegate extension.
+
 extension RMEpisodeListView: RMEpisodeListViewModelDelegate {
     func didLoadInitialEpisodes() {
         spinner.stopAnimating()

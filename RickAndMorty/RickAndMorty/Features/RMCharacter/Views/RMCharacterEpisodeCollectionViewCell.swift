@@ -8,10 +8,12 @@
 import UIKit
 
 final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
-    /// Properties
+    // MARK: - Properties
+
     static let cellIdentifier: String = "RMCharacterEpisodeCollectionViewCell"
 
-    /// Components
+    // MARK: - Components
+
     private let seasonLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +35,8 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .tertiarySystemBackground

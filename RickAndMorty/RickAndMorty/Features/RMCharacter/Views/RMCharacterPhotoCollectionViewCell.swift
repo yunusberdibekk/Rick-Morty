@@ -8,10 +8,12 @@
 import UIKit
 
 final class RMCharacterPhotoCollectionViewCell: UICollectionViewCell {
-    /// Properties
+    // MARK: - Properties
+
     static let cellIdentifier: String = "RMCharacterPhotoCollectionViewCell"
 
-    /// Components
+    // MARK: - Components
+
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -20,7 +22,8 @@ final class RMCharacterPhotoCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)

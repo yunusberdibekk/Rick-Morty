@@ -14,7 +14,8 @@ protocol RMEpisodeDataRender {
 }
 
 final class RMCharacterEpisodeCollectionViewCellViewModel: Hashable, Equatable {
-    /// Properties
+    // MARK: - Properties
+
     private let episodeDataUrl: URL?
     private var isFetching = false
     private var dataBlock: ((RMEpisodeDataRender) -> Void)?
@@ -30,13 +31,12 @@ final class RMCharacterEpisodeCollectionViewCellViewModel: Hashable, Equatable {
         }
     }
 
-    /// Init
+    // MARK: - Init
+
     init(episodeDataUrl: URL?, borderColor: UIColor = .systemBlue) {
         self.episodeDataUrl = episodeDataUrl
         self.borderColor = borderColor
     }
-
-    // MARK: - Public
 
     public func registerForData(_ block: @escaping (RMEpisodeDataRender) -> Void) {
         dataBlock = block

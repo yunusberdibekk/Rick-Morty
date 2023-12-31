@@ -12,6 +12,8 @@ protocol RMLocationViewDelegate: AnyObject {
 }
 
 final class RMLocationView: UIView {
+    // MARK: - Properties
+
     public weak var delegate: RMLocationViewDelegate?
 
     private var viewModel: RMLocationViewModel? {
@@ -31,7 +33,8 @@ final class RMLocationView: UIView {
         }
     }
 
-    /// Components
+    // MARK: - Components
+
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +52,8 @@ final class RMLocationView: UIView {
         return spinner
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
@@ -70,6 +74,7 @@ final class RMLocationView: UIView {
     }
 }
 
+/// Privatized UI functions.
 extension RMLocationView {
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -91,6 +96,8 @@ extension RMLocationView {
     }
 }
 
+// MARK: - RMLocationView + UITableViewDelegate extension.
+
 extension RMLocationView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -101,7 +108,7 @@ extension RMLocationView: UITableViewDelegate {
     }
 }
 
-// MARK: - TableView
+// MARK: - RMLocationView + UITableViewDataSource extension.
 
 extension RMLocationView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -125,7 +132,7 @@ extension RMLocationView: UITableViewDataSource {
     }
 }
 
-// MARK: - ScrollView
+// MARK: - RMLocationView + UIScrollViewDelegate extension.
 
 extension RMLocationView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -141,9 +148,7 @@ extension RMLocationView: UIScrollViewDelegate {
             let totalContentHeight = scrollView.contentSize.height
             let totalScrollViewFixedHeight = scrollView.frame.size.height
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
-                DispatchQueue.main.async {
-                    self?.showLoadingIndicator()
-                }
+                self?.showLoadingIndicator()
                 viewModel.fetchAdditionalLocations()
             }
             timer.invalidate()
@@ -153,5 +158,6 @@ extension RMLocationView: UIScrollViewDelegate {
     private func showLoadingIndicator() {
         let footer = RMTableLoadingFooterView(frame: CGRect(x: .zero, y: .zero, width: frame.size.width, height: 100))
         tableView.tableFooterView = footer
+        // tableView.setContentOffset(CGPoint(x: 0, y: tableView.contentSize.height), animated: true)
     }
 }

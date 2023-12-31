@@ -9,10 +9,12 @@ import UIKit
 
 /// Single cell for a character.
 final class RMCharacterCollectionViewCell: UICollectionViewCell {
-    /// Properties
+    // MARK: - Properties
+
     static let cellIdentifier: String = "RMCharacterCollectionViewCell"
 
-    /// Components
+    // MARK: - Components
+
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -37,7 +39,8 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .secondarySystemBackground

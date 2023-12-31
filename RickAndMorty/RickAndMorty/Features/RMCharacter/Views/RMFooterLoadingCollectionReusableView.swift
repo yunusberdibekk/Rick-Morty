@@ -8,10 +8,12 @@
 import UIKit
 
 final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
-    /// Properties
+    // MARK: - Properties
+
     static let identifier = "RMFooterLoadingCollectionReusableView"
 
-    /// Components
+    // MARK: - Components
+
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
@@ -19,7 +21,8 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
         return spinner
     }()
 
-    /// Init
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground

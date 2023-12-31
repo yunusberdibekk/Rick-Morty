@@ -8,7 +8,8 @@
 import UIKit
 
 final class RMCharacterInformationCollectionViewCellViewModel {
-    /// Properties
+    // MARK: - Properties
+
     private let type: `Type`
     private let value: String
     
@@ -109,11 +110,9 @@ final class RMCharacterInformationCollectionViewCellViewModel {
         }
     }
     
-    /// Init
-    init(
-        type: Type,
-        value: String)
-    {
+    // MARK: - Init
+
+    init(type: Type, value: String) {
         self.type = type
         self.value = value
     }

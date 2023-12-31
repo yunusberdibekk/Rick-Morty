@@ -8,8 +8,12 @@
 import Foundation
 
 final class RMLocationTableViewCellViewModel: Hashable, Equatable {
+    // MARK: - Properties
+
     private let location: RMLocation
     
+    // MARK: - Init
+
     init(location: RMLocation) {
         self.location = location
     }
@@ -27,7 +31,7 @@ final class RMLocationTableViewCellViewModel: Hashable, Equatable {
     }
     
     static func == (lhs: RMLocationTableViewCellViewModel, rhs: RMLocationTableViewCellViewModel) -> Bool {
-        return lhs.location.id == rhs.location.id  
+        return lhs.location.id == rhs.location.id
     }
     
     func hash(into hasher: inout Hasher) {

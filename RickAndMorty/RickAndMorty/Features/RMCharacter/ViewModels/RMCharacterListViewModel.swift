@@ -17,7 +17,8 @@ protocol RMCharacterListViewModelDelegate: AnyObject {
 
 /// View model to handle character list view logic
 final class RMCharacterListViewModel: NSObject {
-    /// Properties
+    // MARK: - Properties
+
     public weak var delegate: RMCharacterListViewModelDelegate?
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = .init()
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
@@ -95,7 +96,8 @@ final class RMCharacterListViewModel: NSObject {
     }
 }
 
-/// RMCharacterListViewModel + CollectionView extension.
+// MARK: - RMCharacterListViewModel + CollectionView extension.
+
 extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cellViewModels.count
@@ -145,7 +147,8 @@ extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionView
     }
 }
 
-/// RMCharacterListViewModel + ScroolView extension.
+// MARK: - RMCharacterListViewModel + ScroolView extension.
+
 extension RMCharacterListViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator,

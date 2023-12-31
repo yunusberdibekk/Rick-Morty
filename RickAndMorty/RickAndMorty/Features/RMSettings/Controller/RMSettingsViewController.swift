@@ -12,7 +12,8 @@ import UIKit
 
 /// Controller to show various app options and settings.
 final class RMSettingsViewController: UIViewController {
-    /// Properties
+    // MARK: - Properties
+
     private var settingsSwiftUIController: UIHostingController<RMSettingsView>?
 
     override func viewDidLoad() {

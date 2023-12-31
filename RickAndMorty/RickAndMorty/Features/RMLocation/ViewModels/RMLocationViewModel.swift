@@ -12,6 +12,8 @@ protocol RMLocationViewModelDelegate: AnyObject {
 }
 
 final class RMLocationViewModel {
+    // MARK: -  Properties
+
     weak var delegate: RMLocationViewModelDelegate?
     public var apiInfo: RMGetAllLocationsResponse.Info?
     public private(set) var cellViewModels: [RMLocationTableViewCellViewModel] = []
@@ -33,6 +35,8 @@ final class RMLocationViewModel {
     public var shouldShowMoreIndicator: Bool {
         return apiInfo?.next != nil
     }
+
+    // MARK: - Init
 
     init() {}
 
