@@ -8,8 +8,9 @@
 import UIKit
 
 final class RMLocationDetailViewController: UIViewController {
-    private let viewModel: RMLocationDetailViewModel
+    // MARK: - UI Components
 
+    private let viewModel: RMLocationDetailViewModel
     private let detailView = RMLocationDetailView()
 
     // MARK: - Init
@@ -53,23 +54,24 @@ final class RMLocationDetailViewController: UIViewController {
     private func didTapShare() {}
 }
 
-// MARK: - RMLocationDetailViewController + RMLocationDetailViewModelDelegate extension.
-
-extension RMLocationDetailViewController: RMLocationDetailViewModelDelegate {
-    func didFetchLocationDetails() {
-        func didFetchLocationDetails() {
-            detailView.configure(with: viewModel)
-        }
-    }
-}
-
 // MARK: - RMLocationDetailViewController + RMLocationDetailViewDelegate extension.
 
 extension RMLocationDetailViewController: RMLocationDetailViewDelegate {
-    func rmEpisodeDetailView(_ detailView: RMLocationDetailView, didSelect character: RMCharacter) {
+    func rmEpisodeDetailView(
+        _ detailView: RMLocationDetailView,
+        didSelect character: RMCharacter
+    ) {
         let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
         vc.title = character.name
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+// MARK: - RMLocationDetailViewController + RMLocationDetailViewModelDelegate extension.
+
+extension RMLocationDetailViewController: RMLocationDetailViewModelDelegate {
+    func didFetchLocationDetails() {
+        detailView.configure(with: viewModel)
     }
 }

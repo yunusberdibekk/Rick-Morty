@@ -12,8 +12,6 @@ protocol RMLocationViewDelegate: AnyObject {
 }
 
 final class RMLocationView: UIView {
-    // MARK: - Properties
-
     public weak var delegate: RMLocationViewDelegate?
 
     private var viewModel: RMLocationViewModel? {
@@ -24,25 +22,26 @@ final class RMLocationView: UIView {
             UIView.animate(withDuration: 0.3) {
                 self.tableView.alpha = 1
             }
+
             viewModel?.registerDidFinishPaginationBlock { [weak self] in
                 DispatchQueue.main.async {
+                    // Loading indicator go bye bye
                     self?.tableView.tableFooterView = nil
+                    // Reload data
                     self?.tableView.reloadData()
                 }
             }
         }
     }
 
-    // MARK: - Components
-
     private let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.alpha = 0
-        tableView.isHidden = true
-        tableView.register(RMLocationTableViewCell.self,
-                           forCellReuseIdentifier: RMLocationTableViewCell.cellIdentifier)
-        return tableView
+        let table = UITableView(frame: .zero, style: .grouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.alpha = 0
+        table.isHidden = true
+        table.register(RMLocationTableViewCell.self,
+                       forCellReuseIdentifier: RMLocationTableViewCell.cellIdentifier)
+        return table
     }()
 
     private let spinner: UIActivityIndicatorView = {
@@ -56,26 +55,24 @@ final class RMLocationView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemBackground
+        translatesAutoresizingMaskIntoConstraints = false
         addSubviews(tableView, spinner)
         spinner.startAnimating()
         addConstraints()
-        configureTableView()
+        configureTable()
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
 
-    public func configure(with viewModel: RMLocationViewModel) {
-        self.viewModel = viewModel
+    private func configureTable() {
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-}
 
-/// Privatized UI functions.
-extension RMLocationView {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             spinner.heightAnchor.constraint(equalToConstant: 100),
@@ -86,13 +83,12 @@ extension RMLocationView {
             tableView.topAnchor.constraint(equalTo: topAnchor),
             tableView.leftAnchor.constraint(equalTo: leftAnchor),
             tableView.rightAnchor.constraint(equalTo: rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
-    private func configureTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
+    public func configure(with viewModel: RMLocationViewModel) {
+        self.viewModel = viewModel
     }
 }
 
@@ -112,20 +108,19 @@ extension RMLocationView: UITableViewDelegate {
 
 extension RMLocationView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel?.cellViewModels.count ?? 0
+        return viewModel?.cellViewModels.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cellViewModels = viewModel?.cellViewModels else {
             fatalError()
         }
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: RMLocationTableViewCell.cellIdentifier,
-                                                       for: indexPath) as? RMLocationTableViewCell
-        else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: RMLocationTableViewCell.cellIdentifier,
+            for: indexPath
+        ) as? RMLocationTableViewCell else {
             fatalError()
         }
-
         let cellViewModel = cellViewModels[indexPath.row]
         cell.configure(with: cellViewModel)
         return cell
@@ -143,21 +138,22 @@ extension RMLocationView: UIScrollViewDelegate {
         else {
             return
         }
-        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
+
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
             let offset = scrollView.contentOffset.y
             let totalContentHeight = scrollView.contentSize.height
             let totalScrollViewFixedHeight = scrollView.frame.size.height
+
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 self?.showLoadingIndicator()
                 viewModel.fetchAdditionalLocations()
             }
-            timer.invalidate()
+            t.invalidate()
         }
     }
 
     private func showLoadingIndicator() {
-        let footer = RMTableLoadingFooterView(frame: CGRect(x: .zero, y: .zero, width: frame.size.width, height: 100))
+        let footer = RMTableLoadingFooterView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 100))
         tableView.tableFooterView = footer
-        // tableView.setContentOffset(CGPoint(x: 0, y: tableView.contentSize.height), animated: true)
     }
 }

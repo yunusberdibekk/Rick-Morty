@@ -7,9 +7,9 @@
 
 import UIKit
 
-/// Controller to show and search for locations.
+/// Controller to show and search for Locations
 final class RMLocationListViewController: UIViewController {
-    // MARK: - Properties
+    // MARK: - UI Components
 
     private let primaryView = RMLocationView()
     private let viewModel = RMLocationViewModel()
@@ -32,15 +32,6 @@ final class RMLocationListViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearch))
     }
 
-    @objc private func didTapSearch() {
-        let vc = RMSearchViewController(config: .init(type: .location))
-        vc.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-/// Privatized UI functions.
-extension RMLocationListViewController {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             primaryView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -49,13 +40,11 @@ extension RMLocationListViewController {
             primaryView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-}
 
-// MARK: - RMLocationListViewController + RMLocationViewModelDelegate extension.
-
-extension RMLocationListViewController: RMLocationViewModelDelegate {
-    func didFetchInitialLocations() {
-        primaryView.configure(with: viewModel)
+    @objc private func didTapSearch() {
+        let vc = RMSearchViewController(config: .init(type: .location))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -66,5 +55,13 @@ extension RMLocationListViewController: RMLocationViewDelegate {
         let vc = RMLocationDetailViewController(location: location)
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+// MARK: - RMLocationListViewController + RMLocationViewModelDelegate extension.
+
+extension RMLocationListViewController: RMLocationViewModelDelegate {
+    func didFetchInitialLocations() {
+        primaryView.configure(with: viewModel)
     }
 }

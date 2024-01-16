@@ -8,11 +8,7 @@
 import UIKit
 
 final class RMLocationTableViewCell: UITableViewCell {
-    // MARK: - Properties
-
-    static let cellIdentifier: String = "RMLocationTableViewCell"
-
-    // MARK: - Components
+    static let cellIdentifier = "RMLocationTableViewCell"
 
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -31,9 +27,9 @@ final class RMLocationTableViewCell: UITableViewCell {
 
     private let dimensionLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 15, weight: .light)
-        label.textColor = .secondaryLabel
         return label
     }()
 
@@ -48,25 +44,9 @@ final class RMLocationTableViewCell: UITableViewCell {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        nameLabel.text = nil
-        typeLabel.text = nil
-        dimensionLabel.text = nil
-    }
-
-    public func configure(with viewModel: RMLocationTableViewCellViewModel) {
-        nameLabel.text = viewModel.name
-        typeLabel.text = viewModel.type
-        dimensionLabel.text = viewModel.dimension
-    }
-}
-
-/// Privatized UI functions.
-extension RMLocationTableViewCell {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -82,5 +62,18 @@ extension RMLocationTableViewCell {
             dimensionLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
             dimensionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nameLabel.text = nil
+        typeLabel.text = nil
+        dimensionLabel.text = nil
+    }
+
+    public func configure(with viewModel: RMLocationTableViewCellViewModel) {
+        nameLabel.text = viewModel.name
+        typeLabel.text = viewModel.type
+        dimensionLabel.text = viewModel.dimension
     }
 }

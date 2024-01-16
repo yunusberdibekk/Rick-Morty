@@ -16,8 +16,6 @@ protocol RMLocationDetailViewDelegate: AnyObject {
 }
 
 final class RMLocationDetailView: UIView {
-    // MARK: - Properties
-
     public weak var delegate: RMLocationDetailViewDelegate?
 
     private var viewModel: RMLocationDetailViewModel? {
@@ -30,8 +28,6 @@ final class RMLocationDetailView: UIView {
             }
         }
     }
-
-    // MARK: - Components
 
     private var collectionView: UICollectionView?
 
@@ -99,12 +95,12 @@ final class RMLocationDetailView: UIView {
         return collectionView
     }
 
+    // MARK: - Public
+
     public func configure(with viewModel: RMLocationDetailViewModel) {
         self.viewModel = viewModel
     }
 }
-
-// MARK: - RMLocationDetailView + UICollectionViewDelegate,UICollectionViewDataSource extension.
 
 extension RMLocationDetailView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -175,7 +171,6 @@ extension RMLocationDetailView: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-/// Privatized UI functions.
 extension RMLocationDetailView {
     func layout(for section: Int) -> NSCollectionLayoutSection {
         guard let sections = viewModel?.cellViewModels else {
